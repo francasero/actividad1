@@ -1,0 +1,18 @@
+stages:
+  visualizacion:
+    cmd: python src/visualizacion.py
+    deps:
+      - src/visualizacion.py
+      - data/raw/datos_clientes.csv
+      - data/raw/datos_resenas.csv
+    outs:
+      - reports/figures
+
+  preparacion:
+    cmd: python src/preparacion.py
+    deps:
+      - src/preparacion.py
+      - data/raw/datos_clientes.csv
+      - data/raw/datos_resenas.csv
+    outs:
+      - data/processed/datos_integrados.csv

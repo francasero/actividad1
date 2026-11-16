@@ -1,0 +1,50 @@
+schema: '2.0'
+stages:
+  visualizacion:
+    cmd: python src/visualizacion.py
+    deps:
+    - path: data/raw/datos_clientes.csv
+      hash: md5
+      md5: b46a5adb5c13bc3007ad2dfe45e58430
+      size: 438782
+      isexec: true
+    - path: data/raw/datos_resenas.csv
+      hash: md5
+      md5: e3ec9eeddaab38eea998b348bcd17d94
+      size: 4465568
+      isexec: true
+    - path: src/visualizacion.py
+      hash: md5
+      md5: fb94d0c26393a6186e10fe074f47ac01
+      size: 3296
+      isexec: true
+    outs:
+    - path: reports/figures
+      hash: md5
+      md5: 0d5fc2a54c767f389aab3498d5ff27d6.dir
+      size: 302751
+      nfiles: 12
+  preparacion:
+    cmd: python src/preparacion.py
+    deps:
+    - path: data/raw/datos_clientes.csv
+      hash: md5
+      md5: b46a5adb5c13bc3007ad2dfe45e58430
+      size: 438782
+      isexec: true
+    - path: data/raw/datos_resenas.csv
+      hash: md5
+      md5: e3ec9eeddaab38eea998b348bcd17d94
+      size: 4465568
+      isexec: true
+    - path: src/preparacion.py
+      hash: md5
+      md5: e3019282c3e2596f6e95c6954f9f474f
+      size: 2912
+      isexec: true
+    outs:
+    - path: data/processed/datos_integrados.csv
+      hash: md5
+      md5: f47507f884341184372f9460dd381635
+      size: 5614804
+      isexec: true
