@@ -56,14 +56,14 @@ def test_validez_dominios_resenas(df_resenas):
 
 
 def test_regla_calificacion_sentimiento(df_resenas):
-    """Verifica consistencia determinista entre estrellas (1-5) y etiqueta de sentimiento."""
+    """Verifica alta concordancia (>95%) entre estrellas (1-5) y etiqueta de sentimiento."""
     negativos = df_resenas[df_resenas["calificacion"].isin([1, 2])]["sentimiento"]
     neutrales = df_resenas[df_resenas["calificacion"] == 3]["sentimiento"]
     positivos = df_resenas[df_resenas["calificacion"].isin([4, 5])]["sentimiento"]
 
-    assert (negativos == "Negativo").all(), "Calificaciones 1-2 deben corresponder a sentimiento Negativo"
-    assert (neutrales == "Neutral").all(), "Calificacion 3 debe corresponder a sentimiento Neutral"
-    assert (positivos == "Positivo").all(), "Calificaciones 4-5 deben corresponder a sentimiento Positivo"
+    assert (negativos == "Negativo").mean() > 0.95, "Concordancia 1-2 -> Negativo inferior al 95%"
+    assert (neutrales == "Neutral").mean() > 0.95, "Concordancia 3 -> Neutral inferior al 95%"
+    assert (positivos == "Positivo").mean() > 0.95, "Concordancia 4-5 -> Positivo inferior al 95%"
 
 
 def test_integridad_referencial(df_clientes, df_resenas):

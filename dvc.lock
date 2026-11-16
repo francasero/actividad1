@@ -39,8 +39,8 @@ stages:
       isexec: true
     - path: src/preparacion.py
       hash: md5
-      md5: e3019282c3e2596f6e95c6954f9f474f
-      size: 2912
+      md5: bf38cc58877ea5d6ac22f77cfb214ca2
+      size: 6181
       isexec: true
     outs:
     - path: data/processed/datos_integrados.csv
@@ -48,3 +48,32 @@ stages:
       md5: f47507f884341184372f9460dd381635
       size: 5614804
       isexec: true
+    - path: reports/reporte_transformaciones.md
+      hash: md5
+      md5: a7ec25a239d5582cc2419a28c599027f
+      size: 1915
+      isexec: true
+  perfilado:
+    cmd: python src/perfilado.py
+    deps:
+    - path: data/raw/datos_clientes.csv
+      hash: md5
+      md5: b46a5adb5c13bc3007ad2dfe45e58430
+      size: 438782
+      isexec: true
+    - path: data/raw/datos_resenas.csv
+      hash: md5
+      md5: e3ec9eeddaab38eea998b348bcd17d94
+      size: 4465568
+      isexec: true
+    - path: src/perfilado.py
+      hash: md5
+      md5: 61ff6870543bfc6dce8131fb1a4af633
+      size: 1010
+      isexec: true
+    outs:
+    - path: reports/perfilado
+      hash: md5
+      md5: 03ee3be41b1c776bc513e190d906bacd.dir
+      size: 2738867
+      nfiles: 2
