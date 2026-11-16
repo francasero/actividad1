@@ -1,37 +1,30 @@
-# 13MIBD Template
+# Predicción de Sentimiento en Reseñas de Clientes (13MBID)
 
-Plantilla de repositorio para la asignatura 13MBID.  
+Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologías de Gestión de Proyectos de Big Data** (*Máster Universitario en Big Data y Ciencia de Datos, Universidad Internacional de Valencia* — Prof. Dr. Horacio Kuna), aplicando el marco metodológico **CRISP-DM + Scrum + DataOps**.
 
-**"Metodologías de Gestión de Proyectos de Big Data"**  
-*Master Universitario en Big Data y Ciencia de Datos  
-Universidad Internacional de Valencia*  
-
-Prof: Dr. Horacio Kuna  
-Dictado: OCT25-26
+- **Repositorio de código (GitHub):** https://github.com/francasero/actividad1
+- **Repositorio de datos y artefactos (DagsHub):** https://dagshub.com/francasero/actividad1
+- **Tablero Scrum (GitHub Projects):** https://github.com/users/francasero/projects/1/views/1
 
 ## Descripción del contenido
 
-Carpetas:
+- `config/`: archivos de configuración del entorno (`requirements.txt`, entre otros) documentados en [Entornos.md](Entornos.md).
+- `data/`: almacenamiento de datos versionados mediante DVC y DagsHub:
+  - `raw/`: datasets crudos originales (`datos_clientes.csv.dvc` y `datos_resenas.csv.dvc`).
+  - `processed/`: dataset limpio, integrado y enriquecido (`datos_integrados.csv`).
+- `notebooks/`: libretas de exploración y procesamiento inicial (`CD01_Visualizacion.ipynb` y `CD02_Procesamiento.ipynb`).
+- `src/`: scripts modulares ejecutados por el pipeline de DVC:
+  - `visualizacion.py`: generación de gráficas exploratorias en `reports/figures/`.
+  - `perfilado.py`: generación de informes automáticos con `ydata-profiling` en `reports/perfilado/`.
+  - `preparacion.py`: limpieza, imputación contextual, ingeniería de características y exportación de `reports/reporte_transformaciones.md`.
+- `tests/`: batería de pruebas automatizadas de calidad e integridad de datos (`test_calidad_datos.py`).
+- `reports/`: artefactos generados por el pipeline (figuras, perfilado HTML, reporte de transformaciones y `reporte_calidad.html`).
+- `docs/` y `examples/`: documentación de referencia y ejemplos de verificación del entorno de la plantilla base.
+- `dvc.yaml`, `dvc.lock` y `uv.lock`: definición declarativa del pipeline reproducible y bloqueo de dependencias.
 
-* config: contiene los archivos de configuración del [entorno](Entornos.md) a replicar vía miniconda/conda, pip o uv.
-* data: directorio para almacenar los datos del proyecto, tiene una subdivisión según la instancia de cada archivo:
-  * raw: contiene datos en su estado original tal como fueran recibidos para el proyecto.
-  * processed: contiene archivos que pudieran haber sido modificados como parte de las tareas de preprocesamiento. Pueden ser utilizadas tanto para el entrenamiento de modelos como para la elbaboración de visualizaciones.
-* notebooks: espacio para almacenar las libretas de experimentación del proyecto.
-* docs: directorio para almacenar los reportes generados a partir del trabajo y otra información de interés.
-* examples: ubicación que contiene ejemplos para el uso de este template.
+## Cómo reproducir el proyecto
 
-En la ejecución de las tareas del proyecto podrían generarse otros directorios como:
-
-* app: para almacenar un aplicativo generado que pudiera ser utilizado por los usuarios finales del proyecto.
-* src: espacio para registrar los scripts que pudiera tener el proyeto durante o después de la fase de experimentación.
-* tests: directorio para definir los tests automatizados que pudieran ser ejecutados sobre los scripts.
-* models: ubicación para almacenar las exportaciones de modelos que sean generados como parte del proyecto.
-
-## Instrucciones
-
-Para replicar este repositorio en una instancia local se podrían ejecutar los siguientes pasos:
-
-1. Clonar el repositorio a un dispositivo local con `git clone`.
-2. Replicar el entorno con alguna de las opciones listadas en el [archivo](Entornos.md) indicado previamente.
-3. Ejecutar la [libreta](examples/probar-entorno.ipynb) de verificación de instalación del directorio de ejemplos.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/francasero/actividad1.git](https://github.com/francasero/actividad1.git)
+   cd actividad1

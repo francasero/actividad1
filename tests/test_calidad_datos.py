@@ -55,6 +55,17 @@ def test_validez_dominios_resenas(df_resenas):
     assert set(df_resenas["sentimiento"].unique()).issubset(sentimientos_validos)
 
 
+def test_regla_calificacion_sentimiento(df_resenas):
+    """Verifica consistencia determinista entre estrellas (1-5) y etiqueta de sentimiento."""
+    negativos = df_resenas[df_resenas["calificacion"].isin([1, 2])]["sentimiento"]
+    neutrales = df_resenas[df_resenas["calificacion"] == 3]["sentimiento"]
+    positivos = df_resenas[df_resenas["calificacion"].isin([4, 5])]["sentimiento"]
+
+    assert (negativos == "Negativo").all(), "Calificaciones 1-2 deben corresponder a sentimiento Negativo"
+    assert (neutrales == "Neutral").all(), "Calificacion 3 debe corresponder a sentimiento Neutral"
+    assert (positivos == "Positivo").all(), "Calificaciones 4-5 deben corresponder a sentimiento Positivo"
+
+
 def test_integridad_referencial(df_clientes, df_resenas):
     clientes_validos = set(df_clientes["id_cliente"])
     huerfanos = ~df_resenas["id_cliente"].isin(clientes_validos)
@@ -64,7 +75,34 @@ def test_integridad_referencial(df_clientes, df_resenas):
 @pytest.mark.skipif(not os.path.exists(PROCESSED_DATA), reason="Dataset procesado aun no generado")
 def test_calidad_dataset_procesado():
     df_proc = pd.read_csv(PROCESSED_DATA)
-    assert df_proc.shape[1] == 19, f"Se esperaban 19 columnas y se obtuvieron {df_proc.shape[1]}"
+    assert df_proc.shape == (24934, 19), f"Dimensiones inesperadas: {df_proc.shape}"
     assert df_proc.isna().sum().sum() == 0, "El dataset procesado contiene valores nulos"
     assert df_proc.duplicated().sum() == 0, "El dataset procesado contiene filas duplicadas"
     assert (df_proc["edad"] < 90).all(), "El dataset procesado aun contiene edades >= 90"
+
+
+@pytest.mark.skipif(not os.path.exists(PROCESSED_DATA), reason="Dataset procesado aun no generado")
+def test_prevencion_data_leakage_procesado():
+    df_proc = pd.read_csv(PROCESSED_DATA)
+    columnas_prohibidas = {"calificacion", "id_cliente", "id_resena", "fecha_resena", "canal_registro"}
+    presentes = columnas_prohibidas.intersection(set(df_proc.columns))
+    assert len(presentes) == 0, f"Columnas con fuga de datos o identificadores presentes: {presentes}"
+
+
+@pytest.mark.skipif(not os.path.exists(PROCESSED_DATA), reason="Dataset procesado aun no generado")
+def test_nuevas_variables_ingenieria():
+    df_proc = pd.read_csv(PROCESSED_DATA)
+    nuevas_cols = {
+        "longitud_resena",
+        "cantidad_palabras_resena",
+        "tiempo_respuesta_dias",
+        "resenas_previas_cliente",
+        "gasto_promedio_cliente_categoria",
+        "proporcion_reclamos_cliente",
+    }
+    assert nuevas_cols.issubset(set(df_proc.columns)), "Faltan variables de ingenieria de caracteristicas"
+    assert (df_proc["longitud_resena"] > 0).all()
+    assert (df_proc["cantidad_palabras_resena"] > 0).all()
+    assert (df_proc["resenas_previas_cliente"] >= 0).all()
+    assert (df_proc["gasto_promedio_cliente_categoria"] > 0).all()
+    assert df_proc["proporcion_reclamos_cliente"].between(0, 1).all()

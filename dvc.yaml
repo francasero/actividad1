@@ -8,6 +8,15 @@ stages:
     outs:
       - reports/figures
 
+  perfilado:
+    cmd: python src/perfilado.py
+    deps:
+      - src/perfilado.py
+      - data/raw/datos_clientes.csv
+      - data/raw/datos_resenas.csv
+    outs:
+      - reports/perfilado
+
   preparacion:
     cmd: python src/preparacion.py
     deps:
@@ -16,3 +25,5 @@ stages:
       - data/raw/datos_resenas.csv
     outs:
       - data/processed/datos_integrados.csv
+      - reports/reporte_transformaciones.md:
+          cache: false
