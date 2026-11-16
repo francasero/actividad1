@@ -1,4 +1,5 @@
 [core]
     remote = storage
 ['remote "storage"']
-    url = https://dagshub.com/francasero/actividad1.dvc
+    url = s3://actividad1
+    endpointurl = https://dagshub.com/api/v1/repo-buckets/s3/francasero
