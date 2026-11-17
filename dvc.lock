@@ -15,8 +15,8 @@ stages:
       isexec: true
     - path: src/visualizacion.py
       hash: md5
-      md5: fb94d0c26393a6186e10fe074f47ac01
-      size: 3296
+      md5: 895bb3834fd496964905d298d80a1957
+      size: 6084
       isexec: true
     outs:
     - path: reports/figures

@@ -82,6 +82,68 @@ def generar_visualizaciones():
 
     print(f"Graficos exportados correctamente en {output_dir}")
 
+def generar_graficos_bivariados():
+    import os
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    os.makedirs("reports/figures", exist_ok=True)
+    df = pd.read_csv("data/raw/datos_resenas.csv", sep=";")
+
+    orden = ["Negativo", "Neutral", "Positivo"]
+    colores = ["#d9534f", "#f0ad4e", "#5cb85c"]
+
+    # 1. Reclamo formal vs Sentimiento
+    ct_reclamo = pd.crosstab(df["reclamo_formal"], df["sentimiento"], normalize="index")[orden] * 100
+    ax = ct_reclamo.plot(kind="bar", stacked=True, color=colores, figsize=(8, 5), rot=0)
+    for container in ax.containers:
+        labels = [f"{v:.1f}%" if v >= 4 else "" for v in container.datavalues]
+        ax.bar_label(container, labels=labels, label_type="center", color="white", fontweight="bold")
+    plt.title("Distribución de Sentimiento según Reclamo Formal")
+    plt.xlabel("Reclamo Formal")
+    plt.ylabel("Porcentaje de Reseñas (%)")
+    plt.legend(title="Sentimiento", bbox_to_anchor=(1.02, 1), loc="upper left")
+    plt.tight_layout()
+    plt.savefig("reports/figures/bivariado_reclamo_sentimiento.png", dpi=150)
+    plt.close()
+
+    # 2. Problema resuelto vs Sentimiento
+    ct_problema = pd.crosstab(df["problema_resuelto"], df["sentimiento"], normalize="index")[orden] * 100
+    ax = ct_problema.plot(kind="bar", stacked=True, color=colores, figsize=(8, 5), rot=0)
+    for container in ax.containers:
+        labels = [f"{v:.1f}%" if v >= 4 else "" for v in container.datavalues]
+        ax.bar_label(container, labels=labels, label_type="center", color="white", fontweight="bold")
+    plt.title("Distribución de Sentimiento según Resolución del Problema")
+    plt.xlabel("Problema Resuelto")
+    plt.ylabel("Porcentaje de Reseñas (%)")
+    plt.legend(title="Sentimiento", bbox_to_anchor=(1.02, 1), loc="upper left")
+    plt.tight_layout()
+    plt.savefig("reports/figures/bivariado_problema_sentimiento.png", dpi=150)
+    plt.close()
+
+    # 3. Tiempo de respuesta (horas) vs Sentimiento
+    fig, ax = plt.subplots(figsize=(8, 5))
+    sns.boxplot(
+        data=df,
+        x="sentimiento",
+        y="tiempo_respuesta_horas",
+        order=orden,
+        hue="sentimiento",
+        palette=colores,
+        legend=False,
+        showfliers=False,
+        ax=ax,
+    )
+    medianas = df.groupby("sentimiento")["tiempo_respuesta_horas"].median().reindex(orden)
+    for idx, med in enumerate(medianas):
+        ax.text(idx, med + 0.6, f"Mediana: {med:.1f} h", ha="center", fontweight="bold", color="black")
+    plt.title("Tiempo de Respuesta (horas) por Clase de Sentimiento")
+    plt.xlabel("Sentimiento")
+    plt.ylabel("Tiempo de Respuesta (horas)")
+    plt.tight_layout()
+    plt.savefig("reports/figures/bivariado_tiempo_respuesta_sentimiento.png", dpi=150)
+    plt.close()
 
 if __name__ == "__main__":
     generar_visualizaciones()
