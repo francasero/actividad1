@@ -27,3 +27,14 @@ stages:
       - data/processed/datos_integrados.csv
       - reports/reporte_transformaciones.md:
           cache: false
+
+  calidad:
+    cmd: pytest tests/test_calidad_datos.py -v --html=reports/reporte_calidad.html --self-contained-html
+    deps:
+      - tests/test_calidad_datos.py
+      - data/raw/datos_clientes.csv
+      - data/raw/datos_resenas.csv
+      - data/processed/datos_integrados.csv
+    outs:
+      - reports/reporte_calidad.html:
+          cache: false

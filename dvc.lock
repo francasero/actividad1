@@ -77,3 +77,33 @@ stages:
       md5: 03ee3be41b1c776bc513e190d906bacd.dir
       size: 2738867
       nfiles: 2
+  calidad:
+    cmd: pytest tests/test_calidad_datos.py -v 
+      --html=reports/reporte_calidad.html --self-contained-html
+    deps:
+    - path: data/processed/datos_integrados.csv
+      hash: md5
+      md5: f47507f884341184372f9460dd381635
+      size: 5614804
+      isexec: true
+    - path: data/raw/datos_clientes.csv
+      hash: md5
+      md5: b46a5adb5c13bc3007ad2dfe45e58430
+      size: 438782
+      isexec: true
+    - path: data/raw/datos_resenas.csv
+      hash: md5
+      md5: e3ec9eeddaab38eea998b348bcd17d94
+      size: 4465568
+      isexec: true
+    - path: tests/test_calidad_datos.py
+      hash: md5
+      md5: c3e1c0a3e70ba9700259c901fa0ac10c
+      size: 6654
+      isexec: true
+    outs:
+    - path: reports/reporte_calidad.html
+      hash: md5
+      md5: 0c0f64e2b582fc80c9d11f90af51b625
+      size: 40559
+      isexec: true

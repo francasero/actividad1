@@ -24,7 +24,33 @@ Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologí
 
 ## Cómo reproducir el proyecto
 
-1. **Clonar el repositorio:**
+1. Clonar el repositorio:
    ```bash
    git clone [https://github.com/francasero/actividad1.git](https://github.com/francasero/actividad1.git)
    cd actividad1
+
+2. Replicar y activar el entorno de Python (consulta Entornos.md para más opciones):
+
+  Con venv + pip (Linux/macOS):
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r config/requirements.txt
+
+  Con uv (multiplataforma):
+  quv sync
+
+  Con conda:
+    conda create -n 13MBID python=3.12
+    conda activate 13MBID
+    pip install -r config/requirements.txt
+
+
+3. Descargar los datos y artefactos versionados desde DagsHub (DVC):
+dvc pull
+
+4. Ejecutar el pipeline completo de datos de forma reproducible:
+dvc repro
+dvc dag
+
+5. Ejecutar la batería de pruebas automatizadas de calidad de datos:
+pytest --html=reports/reporte_calidad.html --self-contained-html
