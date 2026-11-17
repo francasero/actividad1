@@ -15,15 +15,15 @@ stages:
       isexec: true
     - path: src/visualizacion.py
       hash: md5
-      md5: 895bb3834fd496964905d298d80a1957
-      size: 6084
+      md5: 6da3b0c5e47d9ad843578c96f6da9b5c
+      size: 6118
       isexec: true
     outs:
     - path: reports/figures
       hash: md5
-      md5: 0d5fc2a54c767f389aab3498d5ff27d6.dir
-      size: 302751
-      nfiles: 12
+      md5: 73294c2231888056affe622b6e476548.dir
+      size: 476482
+      nfiles: 15
   preparacion:
     cmd: python src/preparacion.py
     deps:

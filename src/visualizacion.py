@@ -147,3 +147,4 @@ def generar_graficos_bivariados():
 
 if __name__ == "__main__":
     generar_visualizaciones()
+    generar_graficos_bivariados()
