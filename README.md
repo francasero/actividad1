@@ -26,7 +26,7 @@ Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologí
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/francasero/actividad1.git](https://github.com/francasero/actividad1.git)
+   git clone https://github.com/francasero/actividad1.git
    cd actividad1
    ```
 
