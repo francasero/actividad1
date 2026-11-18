@@ -123,6 +123,11 @@ def generar_graficos_bivariados():
     plt.close()
 
     # 3. Tiempo de respuesta (horas) vs Sentimiento
+    paleta_dict = {
+        "Negativo": "#d9534f",
+        "Neutral": "#f0ad4e",
+        "Positivo": "#5cb85c",
+    }
     fig, ax = plt.subplots(figsize=(8, 5))
     sns.boxplot(
         data=df,
@@ -130,7 +135,8 @@ def generar_graficos_bivariados():
         y="tiempo_respuesta_horas",
         order=orden,
         hue="sentimiento",
-        palette=colores,
+        hue_order=orden,
+        palette=paleta_dict,
         legend=False,
         showfliers=False,
         ax=ax,
