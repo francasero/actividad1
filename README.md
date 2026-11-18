@@ -25,9 +25,9 @@ Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologí
 ## Cómo reproducir el proyecto
 
 1. Clonar el repositorio:
-   ```bash
-   git clone [https://github.com/francasero/actividad1.git](https://github.com/francasero/actividad1.git)
-   cd actividad1
+  ```bash
+  git clone https://github.com/francasero/actividad1.git
+  cd actividad1
    ```
 
 2. Replicar y activar el entorno de Python (consulta Entornos.md para más opciones):
@@ -39,18 +39,24 @@ Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologí
   pip install -r config/requirements.txt
   ```
 
-  Con uv (multiplataforma):
+  Con uv:
   ```bash
-  quv sync
+  uv sync
   ```
 
   Con conda:
   ```bash
-  conda create -n 13MBID python=3.12
-  conda activate 13MBID
+  conda create -n actividad1 python=3.12
+  conda activate actividad1
   pip install -r config/requirements.txt
+  ``` 
+  
+  Con pip tracicional:
+  ```bash
+  python -m venv .venv
+  source .venv/bin/activate  # En Windows: .venv\Scripts\activate
+  pip install -r config/uv_requirements.txt
   ```
-
 
 
 3. Descargar los datos y artefactos versionados desde DagsHub (DVC):
