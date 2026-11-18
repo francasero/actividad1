@@ -44,13 +44,13 @@ Proyecto desarrollado sobre la plantilla de la asignatura **13MBID - Metodologí
    pip install -r config/uv_requirements.txt
    ```
 
-3. **Autenticarse en DagsHub y descargar los datos versionados (DVC):**
+3. **Descargar los datos versionados (DVC + DagsHub S3):**
 
-   Obtén tu token de acceso en DagsHub (*Settings -> Tokens* o desde *Remote -> Data -> DVC* en el repositorio) y configúralo de forma local (el parámetro `--local` guarda las credenciales en `.dvc/config.local`, archivo ignorado por Git):
+El repositorio utiliza un bucket S3 compatible en DagsHub configurado bajo el remoto `storage`. Para descargar los datasets crudos, los datos procesados y el modelo versionado, configura tus credenciales de DagsHub en local (sin exponerlas en Git) y ejecuta `dvc pull`:
+
    ```bash
-   dvc remote modify origin --local auth basic
-   dvc remote modify origin --local user <tu_usuario_dagshub>
-   dvc remote modify origin --local password <tu_token_dagshub>
+   dvc remote modify --local storage access_key_id <TU_TOKEN_O_ACCESS_KEY_DAGSHUB>
+   dvc remote modify --local storage secret_access_key <TU_TOKEN_O_SECRET_KEY_DAGSHUB>
    dvc pull
    ```
 
