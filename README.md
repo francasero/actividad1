@@ -51,7 +51,7 @@ El repositorio utiliza un bucket S3 compatible en DagsHub configurado bajo el re
    ```bash
    dvc remote modify --local storage access_key_id <TU_TOKEN_O_ACCESS_KEY_DAGSHUB>
    dvc remote modify --local storage secret_access_key <TU_TOKEN_O_SECRET_KEY_DAGSHUB>
-   dvc pull
+   dvc pull -r storage
    ```
 
 4. **Ejecutar el pipeline completo de forma reproducible** (incluye visualización, perfilado, preparación y puerta de calidad):
