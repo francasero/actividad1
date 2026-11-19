@@ -50,3 +50,27 @@ stages:
     metrics:
       - metrics/train_metrics.json:
           cache: false
+
+
+  evaluacion_modelo:
+    cmd: pytest tests/test_modelo.py -v --html=reports/reporte_pruebas_modelo.html --self-contained-html
+    deps:
+      - tests/test_modelo.py
+      - src/train_model.py
+      - models/trained_model.pkl
+      - metrics/train_metrics.json
+      - data/processed/datos_integrados.csv
+    outs:
+      - reports/reporte_pruebas_modelo.html:
+          cache: false
+
+
+  reporte_modelo:
+    cmd: python -m src.reporte_modelo
+    deps:
+      - src/reporte_modelo.py
+      - src/train_model.py
+      - models/trained_model.pkl
+      - data/processed/datos_integrados.csv
+    outs:
+      - reports/modelo
