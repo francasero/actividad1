@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-AUTORES = "Francisco Javier Casero Burgos"
+AUTORES = "Francisco Javier Casero Burgos · v2.0"
 
 
 def obtener_api_url():
