@@ -1,0 +1,22 @@
+{
+  "lote": "data/raw/resenas_nuevas_drift.csv",
+  "estado": "ALERTA",
+  "metricas": {
+    "cantidad_resenas": 1000,
+    "psi_tiempo_respuesta_horas": 0.5106,
+    "psi_importe_compra": 0.0083,
+    "proporcion_predicha_positivo": 0.489,
+    "proporcion_predicha_negativo": 0.319,
+    "proporcion_predicha_neutral": 0.192,
+    "accuracy": 0.881,
+    "f1_macro": 0.8423,
+    "recall_negativo": 0.9735,
+    "tasa_reclamos_formales": 0.114
+  },
+  "alertas": [
+    "Deriva en 'tiempo_respuesta_horas': PSI = 0.511 (umbral 0.2)",
+    "Cambio en la proporción predicha de 'Positivo': 64.5% -> 48.9%",
+    "Cambio en la proporción predicha de 'Negativo': 17.9% -> 31.9%",
+    "Cambio en la tasa de reclamos formales: 9.1% -> 11.4%"
+  ]
+}

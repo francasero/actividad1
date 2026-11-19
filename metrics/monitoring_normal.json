@@ -1,0 +1,17 @@
+{
+  "lote": "data/raw/resenas_nuevas.csv",
+  "estado": "OK",
+  "metricas": {
+    "cantidad_resenas": 1000,
+    "psi_tiempo_respuesta_horas": 0.0119,
+    "psi_importe_compra": 0.008,
+    "proporcion_predicha_positivo": 0.583,
+    "proporcion_predicha_negativo": 0.174,
+    "proporcion_predicha_neutral": 0.243,
+    "accuracy": 0.859,
+    "f1_macro": 0.82,
+    "recall_negativo": 0.8889,
+    "tasa_reclamos_formales": 0.083
+  },
+  "alertas": []
+}

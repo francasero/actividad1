@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -56,6 +58,24 @@ jobs:
 
       - name: Ejecutar todos los tests
         run: pytest tests -v
+
+      - name: Monitoreo del lote actual (si hay alertas, la ejecución falla y GitHub avisa)
+        run: python -m src.monitor data/raw/resenas_nuevas.csv metrics/monitoring_normal.json --fallar-si-alerta
+
+      - name: Monitoreo del lote con deriva (demostración, se esperan alertas)
+        run: python -m src.monitor data/raw/resenas_nuevas_drift.csv metrics/monitoring_drift.json
+
+      - name: Resumen del monitoreo en la ejecución
+        if: always()
+        run: |
+          {
+            echo "### Resultado del monitoreo"
+            for f in metrics/monitoring_normal.json metrics/monitoring_drift.json; do
+              [ -f "$f" ] || continue
+              echo "- **$f**: $(jq -r '.estado' "$f")"
+              jq -r '.alertas[] | "  - " + .' "$f"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Guardar reportes
         if: always()
