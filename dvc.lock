@@ -39,8 +39,8 @@ stages:
       isexec: true
     - path: src/preparacion.py
       hash: md5
-      md5: bf38cc58877ea5d6ac22f77cfb214ca2
-      size: 6181
+      md5: 729e1f48e294703bcc814411fd02e9b4
+      size: 6259
       isexec: true
     outs:
     - path: data/processed/datos_integrados.csv

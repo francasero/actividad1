@@ -5,6 +5,13 @@ import pandas as pd
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
+def create_attributes(df):
+    """Atributos derivados que se calculan solo con los campos de una reseña."""
+    df = df.copy()
+    df["longitud_resena"] = df["texto_resena"].str.len()
+    df["cantidad_palabras_resena"] = df["texto_resena"].str.split().apply(len)
+    df["tiempo_respuesta_dias"] = df["tiempo_respuesta_horas"] / 24
+    return df
 
 def preparar_datos():
     ruta_clientes = "data/raw/datos_clientes.csv"
@@ -46,12 +53,7 @@ def preparar_datos():
     )
     filas_post_join = df_integrado.shape[0]
 
-    # 5. Ingenieria de caracteristicas
-    df_integrado["longitud_resena"] = df_integrado["texto_resena"].str.len()
-    df_integrado["cantidad_palabras_resena"] = (
-        df_integrado["texto_resena"].str.split().apply(len)
-    )
-    df_integrado["tiempo_respuesta_dias"] = df_integrado["tiempo_respuesta_horas"] / 24
+    df_integrado = create_attributes(df_integrado)
 
     df_integrado["fecha_resena"] = pd.to_datetime(df_integrado["fecha_resena"])
     df_integrado = df_integrado.sort_values(
