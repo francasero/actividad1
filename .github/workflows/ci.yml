@@ -1,0 +1,69 @@
+name: CI - pipeline y tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      UV_FROZEN: "1"
+      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Instalar uv
+        uses: astral-sh/setup-uv@v10.3.3
+        with:
+          enable-cache: true
+
+      - name: Instalar dependencias (uv.lock)
+        run: uv sync
+
+      - name: Ajuste de compatibilidad de setuptools
+        run: uv pip install "setuptools<81"
+
+      - name: Activar el entorno virtual
+        run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+
+      - name: Configurar el remoto de DVC (DagsHub)
+        env:
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        run: |
+          dvc remote modify --local storage access_key_id "$DAGSHUB_TOKEN"
+          dvc remote modify --local storage secret_access_key "$DAGSHUB_TOKEN"
+
+      - name: Descargar datos y modelo versionados
+        run: dvc pull --allow-missing
+
+      - name: Reproducir el pipeline
+        run: dvc repro
+
+      - name: Ejecutar todos los tests
+        run: pytest tests -v
+
+      - name: Guardar reportes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reportes
+          path: |
+            reports/reporte_calidad.html
+            reports/reporte_pruebas_modelo.html
+            reports/modelo/
+            metrics/
