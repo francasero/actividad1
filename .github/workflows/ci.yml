@@ -35,8 +35,8 @@ jobs:
       - name: Instalar dependencias (uv.lock)
         run: uv sync
 
-      - name: Ajuste de compatibilidad de setuptools
-        run: uv pip install "setuptools<81"
+      - name: Ajuste de compatibilidad de setuptools y soporte S3 de DVC
+        run: uv pip install "setuptools<81" dvc-s3
 
       - name: Activar el entorno virtual
         run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
