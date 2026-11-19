@@ -38,3 +38,15 @@ stages:
     outs:
       - reports/reporte_calidad.html:
           cache: false
+
+
+  entrenamiento:
+    cmd: python -m src.train_model
+    deps:
+      - src/train_model.py
+      - data/processed/datos_integrados.csv
+    outs:
+      - models/trained_model.pkl
+    metrics:
+      - metrics/train_metrics.json:
+          cache: false

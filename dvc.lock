@@ -107,3 +107,27 @@ stages:
       md5: 0c0f64e2b582fc80c9d11f90af51b625
       size: 40559
       isexec: true
+  entrenamiento:
+    cmd: python -m src.train_model
+    deps:
+    - path: data/processed/datos_integrados.csv
+      hash: md5
+      md5: f47507f884341184372f9460dd381635
+      size: 5614804
+      isexec: true
+    - path: src/train_model.py
+      hash: md5
+      md5: 1301468653380831e8109166cfe66bb3
+      size: 7848
+      isexec: true
+    outs:
+    - path: metrics/train_metrics.json
+      hash: md5
+      md5: f580e43331a755c4eb0d4ad959848ea0
+      size: 308
+      isexec: true
+    - path: models/trained_model.pkl
+      hash: md5
+      md5: 26dc9a92e1df46f895da4110e8a05994
+      size: 17850
+      isexec: true

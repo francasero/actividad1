@@ -1,0 +1,9 @@
+{
+  "modelo_seleccionado": "logreg_balanceada_C0.1",
+  "test_accuracy": 0.8680834001603849,
+  "test_precision_macro": 0.8162050297048952,
+  "test_recall_macro": 0.8545033534408221,
+  "test_f1_macro": 0.8310983757249931,
+  "test_recall_negativo": 0.9035874439461884,
+  "test_roc_auc_ovr": 0.9346084372963461
+}
